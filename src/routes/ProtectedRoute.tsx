@@ -1,20 +1,20 @@
-import { Navigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
+import { Navigate, Outlet } from "react-router-dom";
+import Cookies from "js-cookie";
+import useProfileStatus from "@hooks/useAuth";
 
-type AuthRouteProps = {
-  page: JSX.Element;
-};
+const Protected = () => {
+  const refreshToken = Cookies.get("refresh_token");
 
-const Protected = ({ page }: AuthRouteProps) => {
-  const accessToken = localStorage.getItem("access_token");
-
-  if (!accessToken) {
+  if (!refreshToken) {
+    console.log("--Going Login--");
     return <Navigate to="/login" />;
   }
 
+  useProfileStatus();
+
   return (
     <>
-      <div>{page}</div>
+      <Outlet />
     </>
   );
 };

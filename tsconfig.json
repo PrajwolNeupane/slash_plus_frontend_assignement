@@ -41,6 +41,9 @@
       "@routes/*": [
         "routes/*"
       ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
     }
   },
   "include": [

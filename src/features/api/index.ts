@@ -1,4 +1,6 @@
+import { GetAccessTokenResponse } from "@features/service/auth/auth.type";
 import instance from "../baseUrl";
+import Cookies from "js-cookie";
 
 type Token = {
   access: string | null;
@@ -40,16 +42,12 @@ export const api = {
 // Function to get headers with access token
 const getHeadersWithAccessToken = async (): Promise<object> => {
   let customHeaders: Record<string, string> = {};
-  let accessToken = localStorage.getItem("access_token");
+  let accessToken = Cookies.get("access_token");
 
   if (!accessToken) {
-    return customHeaders;
-  }
-
-  if (isAccessTokenExpired()) {
     const newToken = await getNewAccessToken();
     customHeaders.Authorization = `Bearer ${
-      newToken.access || localStorage.getItem("access_token")
+      newToken.access || Cookies.get("access_token")
     }`;
   } else {
     customHeaders.Authorization = `Bearer ${accessToken}`;
@@ -61,28 +59,20 @@ const getHeadersWithAccessToken = async (): Promise<object> => {
 // Get a new access token ==============
 // =====================================
 const getNewAccessToken = async (): Promise<Token> => {
-  const response = await instance.post<any>(
-    "/school/refresh",
-    {
-      refresh: localStorage.getItem("refresh_token"),
-    },
-    { withCredentials: true }
-  );
+  let customHeaders: Record<string, string> = {};
+  let refreshToken = Cookies.get("refresh_token");
+  customHeaders.Authorization = `Bearer ${refreshToken}`;
+  const response = await instance.get<GetAccessTokenResponse>("/auth/refresh", {
+    withCredentials: true,
+    headers: customHeaders,
+  });
 
   //set tokens to local storage
-  localStorage.setItem("access_token", response.data.access!);
-  localStorage.setItem("issued_at", Date.now().toString());
-  localStorage.setItem("refresh_token", response.data.refresh!);
+  Cookies.set("access_token", response.data?.accessToken!);
+  Cookies.set("refresh_token", response.data?.refreshToken!);
 
-  return response.data;
-};
-
-// Function to check if access token is expired or not ========
-// ==================================================
-const isAccessTokenExpired = (): boolean => {
-  const issuedAt = Number(localStorage.getItem("issued_at"));
-  const expirationTime = issuedAt + 3600 * 1000;
-  const currentTime = Date.now();
-
-  return currentTime > expirationTime;
+  return {
+    access: response.data?.accessToken,
+    refresh: response.data?.refreshToken,
+  };
 };

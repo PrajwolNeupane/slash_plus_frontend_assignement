@@ -1,8 +1,16 @@
 import { CustomButton, CustomInput, CustomPinInput } from "@components/shared";
-import { registerUserSchema } from "@features/schema/register-user.schema";
+import {
+  LoginUserSchema,
+  loginUserSchema,
+} from "@features/schema/login-user.schema";
+import { useLogin } from "@features/service/auth/auth.api";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const {
@@ -10,11 +18,33 @@ export default function LoginPage() {
     register,
     handleSubmit,
   } = useForm({
-    resolver: yupResolver(registerUserSchema),
+    resolver: yupResolver(loginUserSchema),
   });
 
-  const submitHandler = handleSubmit((data) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const { mutateAsync: loginAsync, isPending: isLoading } = useMutation({
+    mutationFn: (body: LoginUserSchema) => useLogin(body),
+  });
+
+  const submitHandler = handleSubmit(async (data) => {
+    try {
+      const response = await loginAsync(data);
+      if (response.success) {
+        toast.success("Login Successful");
+        Cookies.set("access_token", response?.accessToken!, {
+          expires: 1 / 48,
+        });
+        Cookies.set("refresh_token", response?.refreshToken!, { expires: 0.5 });
+        navigate("/success");
+      }
+    } catch (e: unknown) {
+      let errorMessage = "An error occurred during login";
+      if (e instanceof AxiosError) {
+        errorMessage = e.response?.data?.message || errorMessage;
+      }
+      toast.error(errorMessage);
+    }
   });
 
   return (
@@ -38,7 +68,7 @@ export default function LoginPage() {
           errors={errors}
           register={register}
         />
-        <CustomButton text="Login" />
+        <CustomButton text="Login" isLoading={isLoading} className="mt-5" />
         <Link to={"/register"} className="text-primary">
           Doesn't have an account ? Register here
         </Link>

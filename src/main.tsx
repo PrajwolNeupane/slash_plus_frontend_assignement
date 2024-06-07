@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import store from "@features/store/index.ts";
 import { BrowserRouter as Router } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 export const queryClient = new QueryClient();
 
