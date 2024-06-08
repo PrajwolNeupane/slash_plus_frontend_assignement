@@ -5,7 +5,7 @@ import { useAppDispatch } from "@features/store/hooks";
 import { setUser } from "../features/slices/auth";
 import { useProfile } from "@features/service/auth/auth.api";
 
-function useProfileStatus() {
+function useAuth() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { data: user } = useQuery({
@@ -13,12 +13,11 @@ function useProfileStatus() {
     queryFn: useProfile,
     retry: false,
     refetchOnWindowFocus: false,
-    refetchInterval: 100 * 60,
   });
 
   useEffect(() => {
     if (user) {
-      switch ((user as any).message) {
+      switch ((user as any).title) {
         case "Forbidden":
           navigate("/login");
           break;
@@ -35,4 +34,4 @@ function useProfileStatus() {
   return;
 }
 
-export default useProfileStatus;
+export default useAuth;

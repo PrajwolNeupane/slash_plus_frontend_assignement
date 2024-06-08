@@ -41,6 +41,7 @@ export const api = {
 
 // Function to get headers with access token
 const getHeadersWithAccessToken = async (): Promise<object> => {
+  console.log("--Calling getHeadersWithAccessToken--");
   let customHeaders: Record<string, string> = {};
   let accessToken = Cookies.get("access_token");
 
@@ -59,20 +60,29 @@ const getHeadersWithAccessToken = async (): Promise<object> => {
 // Get a new access token ==============
 // =====================================
 const getNewAccessToken = async (): Promise<Token> => {
+  console.log("--Calling getNewAccessToken--");
   let customHeaders: Record<string, string> = {};
   let refreshToken = Cookies.get("refresh_token");
-  customHeaders.Authorization = `Bearer ${refreshToken}`;
-  const response = await instance.get<GetAccessTokenResponse>("/auth/refresh", {
-    withCredentials: true,
-    headers: customHeaders,
-  });
+  if (refreshToken) {
+    customHeaders.Authorization = `Bearer ${refreshToken}`;
+    const response = await instance.get<GetAccessTokenResponse>(
+      "/auth/refresh",
+      {
+        withCredentials: true,
+        headers: customHeaders,
+      }
+    );
+    //set tokens to cookie
+    Cookies.set("access_token", response.data?.accessToken!);
+    Cookies.set("refresh_token", response.data?.refreshToken!);
 
-  //set tokens to local storage
-  Cookies.set("access_token", response.data?.accessToken!);
-  Cookies.set("refresh_token", response.data?.refreshToken!);
-
+    return {
+      access: response.data?.accessToken,
+      refresh: response.data?.refreshToken,
+    };
+  }
   return {
-    access: response.data?.accessToken,
-    refresh: response.data?.refreshToken,
+    access: "",
+    refresh: "",
   };
 };
