@@ -12,6 +12,7 @@ export default function NavBar() {
   const logout = useCallback(() => {
     Cookies.remove("access_token");
     Cookies.remove("refresh_token");
+    Cookies.remove("issued_at");
     navigate("/login");
     toast.success("Logout Successfully");
   }, []);

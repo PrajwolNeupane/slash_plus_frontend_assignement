@@ -36,6 +36,7 @@ export default function LoginPage() {
           expires: 1 / 48,
         });
         Cookies.set("refresh_token", response?.refreshToken!, { expires: 0.5 });
+        Cookies.set("issued_at", Date.now().toString());
         navigate("/success");
       }
     } catch (e: unknown) {

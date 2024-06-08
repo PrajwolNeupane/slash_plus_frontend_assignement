@@ -44,8 +44,7 @@ const getHeadersWithAccessToken = async (): Promise<object> => {
   console.log("--Calling getHeadersWithAccessToken--");
   let customHeaders: Record<string, string> = {};
   let accessToken = Cookies.get("access_token");
-
-  if (!accessToken) {
+  if (!accessToken || isAccessTokenExpired()) {
     const newToken = await getNewAccessToken();
     customHeaders.Authorization = `Bearer ${
       newToken.access || Cookies.get("access_token")
@@ -75,6 +74,7 @@ const getNewAccessToken = async (): Promise<Token> => {
     //set tokens to cookie
     Cookies.set("access_token", response.data?.accessToken!);
     Cookies.set("refresh_token", response.data?.refreshToken!);
+    Cookies.set("issued_at", Date.now().toString());
 
     return {
       access: response.data?.accessToken,
@@ -85,4 +85,11 @@ const getNewAccessToken = async (): Promise<Token> => {
     access: "",
     refresh: "",
   };
+};
+const isAccessTokenExpired = (): boolean => {
+  const issuedAt = Number(Cookies.get("issued_at"));
+  const expirationTime = issuedAt + 1800 * 1000;
+  const currentTime = Date.now();
+
+  return currentTime > expirationTime;
 };
