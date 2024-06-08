@@ -16,17 +16,15 @@ Make sure you have the following installed on your machine:
 First, clone the repository to your local machine using Git. Open your terminal and run the following command:
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/PrajwolNeupane/slash_plus_frontend_assignement.git
 ```
-
-Replace `https://github.com/your-username/your-repo.git` with the actual URL of your repository.
 
 ### 2. Open the Project in Your Code Editor
 
 Navigate to the project directory and open it in your preferred code editor (e.g., VS Code).
 
 ```bash
-cd your-repo
+cd slash_plus_frontend_assignement
 code .
 ```
 
@@ -52,7 +50,7 @@ Run the following command to start the development server:
 npm run dev
 ```
 
-This will start the application and you can view it in your browser at `http://localhost:3000`.
+This will start the application and you can view it in your browser at `http://localhost:5173`.
 
 ## Guest Login Credentials
 
