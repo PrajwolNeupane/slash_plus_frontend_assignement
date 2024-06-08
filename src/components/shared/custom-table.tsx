@@ -74,8 +74,10 @@ function CustomTable<T>({ title, data, columnsData }: CustomTableProps<T>) {
     <div className="w-full">
       {/* Table section ========================= */}
       <div className="flex flex-col rounded-md w-full py-1 border-2 border-primary">
-        <div className="flex lg:flex-row flex-col justify-between py-2 px-5 w-full items-center rounded-md">
-          <div className="text-xl text-primary">{title}</div>
+        <div className="flex flex-row justify-between py-2 px-5 w-full items-center rounded-md">
+          <div className="xl:text-xl rg:text-lg sm:text-base text-md text-primary">
+            {title}
+          </div>
         </div>
         {/* Table ========================== */}
         <div className="w-full overflow-auto h-[55vh]">
@@ -96,7 +98,9 @@ function CustomTable<T>({ title, data, columnsData }: CustomTableProps<T>) {
                         colSpan={header.colSpan}
                       >
                         {header.isPlaceholder ? null : (
-                          <>{flexRender(headerTitle, header.getContext())}</>
+                          <div className="lg:text-base md:text-md text-sm">
+                            {flexRender(headerTitle, header.getContext())}
+                          </div>
                         )}
                       </th>
                     );
@@ -116,7 +120,10 @@ function CustomTable<T>({ title, data, columnsData }: CustomTableProps<T>) {
                   >
                     {row.getVisibleCells().map((cell) => {
                       return (
-                        <td className="pl-4" key={cell.id}>
+                        <td
+                          className="pl-4 lg:text-base md:text-md text-sm"
+                          key={cell.id}
+                        >
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()

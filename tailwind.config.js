@@ -16,6 +16,7 @@ export default {
         light: "300"
       },
       fontSize: {
+        xs: "0.7rem",
         sm: "0.8rem",
         md: "0.9rem",
         base: "1rem",
@@ -28,12 +29,21 @@ export default {
       },
       colors: {
         primary: "#24394d",
-        secondary: "#FFC702",
+        secondary: "#d4a502",
         sucess: "#00B42A",
         failure: "#B71C1C",
         warning: "#FBBC05",
         info: "#2196F3",
         text: "#424242",
+      },
+      screens: {
+        "2xl": "1440px",
+        xl: "1280px",
+        lg: "980px",
+        rg: "780px",
+        md: "580px",
+        sm: "420px",
+        xs: "300px",
       },
     },
   },

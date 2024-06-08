@@ -3,9 +3,20 @@ import { Route, Routes } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import Protected from "./ProtectedRoute";
 import AuthenticatedRoute from "./AuthenticateRoute";
-const LoginPage = lazy(() => import("@pages/Login/login-page"));
-const RegisterPage = lazy(() => import("@pages/Register/register-page"));
-const SuccessPage = lazy(() => import("@pages/Sucess/success-page"));
+import { ScreenLoader } from "@components/shared";
+const LoginPage = lazy(
+  () => import(/* webpackChunkName: "login-page" */ "@pages/Login/login-page")
+);
+const RegisterPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "register-page" */ "@pages/Register/register-page"
+    )
+);
+const SuccessPage = lazy(
+  () =>
+    import(/* webpackChunkName: "success-page" */ "@pages/Sucess/success-page")
+);
 
 const CustomRoutes = () => {
   return (
@@ -14,7 +25,7 @@ const CustomRoutes = () => {
         <Route
           path="/login"
           element={
-            <Suspense fallback={<h2>Loading</h2>}>
+            <Suspense fallback={<ScreenLoader />}>
               <LoginPage />
             </Suspense>
           }
@@ -22,7 +33,7 @@ const CustomRoutes = () => {
         <Route
           path="/register"
           element={
-            <Suspense fallback={<h2>Loading</h2>}>
+            <Suspense fallback={<ScreenLoader />}>
               <RegisterPage />
             </Suspense>
           }
@@ -33,7 +44,7 @@ const CustomRoutes = () => {
         <Route
           path="/success"
           element={
-            <Suspense fallback={<h2>Loading</h2>}>
+            <Suspense fallback={<ScreenLoader />}>
               <SuccessPage />
             </Suspense>
           }
@@ -41,7 +52,7 @@ const CustomRoutes = () => {
         <Route
           path="/*"
           element={
-            <Suspense fallback={<h2>Loading</h2>}>
+            <Suspense fallback={<ScreenLoader />}>
               <Navigate to={"/success"} />
             </Suspense>
           }

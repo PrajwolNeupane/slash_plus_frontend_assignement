@@ -51,10 +51,10 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col w-full h-screen items-center justify-center bg-gray-50">
       <form
-        className="flex flex-col bg-gray-100 w-[28%] p-5 shadow-sm gap-5"
+        className="flex flex-col bg-gray-100 xl:w-[28%] lg:w-[30%] rg:w-[45%] md:w-[50%] sm:w-[70%] w-[95%] p-5 shadow-sm gap-5"
         onSubmit={submitHandler}
       >
-        <h2 className="font-medium text-primary text-2xl">Login</h2>
+        <h2 className="font-medium text-primary rg:text-2xl text-xl">Login</h2>
         <CustomInput
           label="Email"
           name="email"
@@ -70,7 +70,10 @@ export default function LoginPage() {
           register={register}
         />
         <CustomButton text="Login" isLoading={isLoading} className="mt-5" />
-        <Link to={"/register"} className="text-primary">
+        <Link
+          to={"/register"}
+          className="text-primary lg:text-base rg:text-md text-sm"
+        >
           Doesn't have an account ? Register here
         </Link>
       </form>
