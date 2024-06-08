@@ -1,30 +1,96 @@
-# React + TypeScript + Vite
+# React and Vite Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the React and Vite application setup guide. This document will walk you through the steps needed to set up and run the project on your local machine.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Make sure you have the following installed on your machine:
 
-## Expanding the ESLint configuration
+- [Node.js](https://nodejs.org/) (v14.x or later)
+- [Git](https://git-scm.com/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Getting Started
 
-- Configure the top-level `parserOptions` property like this:
+### 1. Clone the Repository
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+First, clone the repository to your local machine using Git. Open your terminal and run the following command:
+
+```bash
+git clone https://github.com/your-username/your-repo.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Replace `https://github.com/your-username/your-repo.git` with the actual URL of your repository.
+
+### 2. Open the Project in Your Code Editor
+
+Navigate to the project directory and open it in your preferred code editor (e.g., VS Code).
+
+```bash
+cd your-repo
+code .
+```
+
+### 3. Install Dependencies
+
+In the terminal, run the following command to install all necessary packages:
+
+```bash
+npm install
+```
+
+This command will read the `package.json` file and install all the dependencies listed.
+
+### 4. Setup Environment Variables
+
+You should have received an email with the necessary environment variables. Create a `.env` file in the root directory of the project and add the variables there.
+
+### 5. Start the Development Server
+
+Run the following command to start the development server:
+
+```bash
+npm run dev
+```
+
+This will start the application and you can view it in your browser at `http://localhost:3000`.
+
+## Guest Login Credentials
+
+To log in as a guest, use the following credentials:
+
+- **Email:** test@gmail.com
+- **Login Code:** 123456
+
+## Additional Commands
+
+### Build for Production
+
+To build the project for production, run:
+
+```bash
+npm run build
+```
+
+### Preview the Production Build
+
+To preview the production build locally, run:
+
+```bash
+npm run preview
+```
+
+## Troubleshooting
+
+If you encounter any issues during the setup process, make sure to:
+
+1. Check that you have the correct versions of Node.js and npm installed.
+2. Ensure all dependencies are properly installed by running `npm install` again.
+3. Verify that your environment variables are correctly set up in the `.env` file.
+
+If problems persist, feel free to contact the project maintainers for further assistance.
+
+Happy coding!
+
+---
+
+Feel free to reach out if you have any questions or need further assistance. Enjoy working on the project!
