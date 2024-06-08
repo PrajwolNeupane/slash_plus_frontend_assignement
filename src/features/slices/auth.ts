@@ -23,7 +23,7 @@ export const authSlice = createSlice({
     },
 
     logOut: (state) => {
-      state = initialState;
+      (state._id = null), (state.email = null), (state.photo = null);
     },
   },
 });

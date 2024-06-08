@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
-import { useAppSelector } from "@features/store/hooks";
+import { useAppDispatch, useAppSelector } from "@features/store/hooks";
 import { useCallback } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { logOut } from "@features/slices/auth";
 
 export default function NavBar() {
   const user = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const logout = useCallback(() => {
+  const logoutHandler = useCallback(() => {
+    dispatch(logOut());
     Cookies.remove("access_token");
     Cookies.remove("refresh_token");
     Cookies.remove("issued_at");
@@ -39,7 +42,7 @@ export default function NavBar() {
             <h4 className="text-md line-clamp-1 text-primary ">{user.email}</h4>
             <h4
               className="text-primary font-medium cursor-pointer"
-              onClick={logout}
+              onClick={logoutHandler}
             >
               Logout
             </h4>
